@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BatailleWF
 {
+    /// <summary>
+    /// Classe statique pour conserver les constantes de puissance des cartes
+    /// </summary>
     public static class PuissanceCarte
     {
         public static Dictionary<int, string> Standard = new Dictionary<int, string>()

@@ -186,6 +186,7 @@
             this.Controls.Add(this.gridLayout);
             this.Name = "BatailleWindow";
             this.Text = "Bataille";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatailleWindow_FormClosing);
             this.gridLayout.ResumeLayout(false);
             this.gridLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbJ2)).EndInit();

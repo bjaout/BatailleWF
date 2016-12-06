@@ -7,10 +7,19 @@ using System.Drawing;
 
 namespace BatailleWF
 {
+    /// <summary>
+    /// Classe permettant de décrire une carte avec aspect graphique
+    /// </summary>
     public class CarteGraphique:Carte
     {
         public Image Image{ get; set; }
 
+        /// <summary>
+        /// Constructeur permettant de récupérer en plus des informations de base, l'image correspondant à la carte
+        /// </summary>
+        /// <param name="valeur"></param>
+        /// <param name="couleur"></param>
+        /// <param name="type"></param>
         public CarteGraphique(int valeur, string couleur, Dictionary<int,string> type):base(valeur,couleur,type)
         {
             int val;
@@ -41,28 +50,6 @@ namespace BatailleWF
                     throw new NotImplementedException();
             }
             this.Image = (Image)global::BatailleWF.Properties.Resources.ResourceManager.GetObject(coul + String.Format("{0:00}",val));
-        }
-
-        public override string ToString()
-        {
-            string strPuissance = "";
-            Type.TryGetValue(this.Valeur, out strPuissance);
-            return strPuissance + " de " + this.Couleur;
-        }
-
-        public int CompareTo(object obj)
-        {
-            int resultat = 0;
-            try
-            {
-                Carte carte = obj as Carte;
-                resultat = this.Valeur.CompareTo(carte.Valeur);
-            }
-            catch (Exception)
-            {
-
-            }
-            return resultat;
         }
     }
 }

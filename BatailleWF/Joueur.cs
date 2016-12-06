@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BatailleWF
 {
+    /// <summary>
+    /// Classe représentant un joueur de jeux de carte
+    /// </summary>
     public class Joueur
     {
         public string Nom { set; get; }

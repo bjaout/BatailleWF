@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace BatailleWF
 {
+    /// <summary>
+    /// Classe générique représentant un paquet de carte générique
+    /// </summary>
+    /// <typeparam name="T">N'importe quel type de Carte</typeparam>
     public class PaquetCartes<T>:List<T> where T:Carte
     {
+        /// <summary>
+        /// Créateur par défaut générant un paquet standard de 52 cartes
+        /// </summary>
         public PaquetCartes():base()
         {
             for(int i = 0; i < 13; i++)
@@ -19,6 +26,9 @@ namespace BatailleWF
             }
         }
 
+        /// <summary>
+        /// Permet de mélanger un paquet de carte
+        /// </summary>
         public void Melanger()
         {
             List<T> listeMelangee = new List<T>();
@@ -32,6 +42,10 @@ namespace BatailleWF
             this.AddRange(listeMelangee);
         }
 
+        /// <summary>
+        /// Permet de distribuer les cartes à un nombre joueurs permettant de répartir les cartes équitablement
+        /// </summary>
+        /// <param name="joueurs"></param>
         public void DistribuerCartes(List<Joueur> joueurs)
         {
             while (this.Count > 0)
