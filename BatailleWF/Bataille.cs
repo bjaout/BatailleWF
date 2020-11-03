@@ -39,6 +39,9 @@ namespace BatailleWF
         public event BatailleEventHandler BatailleEvent;
         public event PliGainedEventHandler PliGainedEvent;
 
+        /// <summary>
+        /// Créateur standard utilisé uniquement à des fins de test
+        /// </summary>
         public Bataille()
         {
             joueur1 = new Joueur("Toto");

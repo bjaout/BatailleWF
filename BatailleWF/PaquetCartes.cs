@@ -19,7 +19,7 @@ namespace BatailleWF
         {
             for(int i = 0; i < 13; i++)
             {
-                this.Add((T)Activator.CreateInstance(typeof(T),i, "Coeur", PuissanceCarte.Standard));
+                this.Add((T)Activator.CreateInstance(typeof(T),i, "Coeur", PuissanceCarte.Standard)); // Permet de générer aussi bien des Carte que des CarteGraphique en fonction du type T choisi lors de l'appel du créateur
                 this.Add((T)Activator.CreateInstance(typeof(T),i, "Trèfle", PuissanceCarte.Standard));
                 this.Add((T)Activator.CreateInstance(typeof(T),i, "Carreau", PuissanceCarte.Standard));
                 this.Add((T)Activator.CreateInstance(typeof(T),i, "Pique", PuissanceCarte.Standard));

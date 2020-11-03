@@ -12,7 +12,7 @@ namespace BatailleWF
     public class Joueur
     {
         public string Nom { set; get; }
-        public Queue<Carte> Main { set; get; }
+        public Queue<Carte> Main { set; get; } // Utilisation d'une queue car on ajoute toujours les cartes à la fin et on récupère toujours les premières cartes
 
         public Joueur(string nom)
         {

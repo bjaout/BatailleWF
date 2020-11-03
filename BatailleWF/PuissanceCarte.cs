@@ -11,6 +11,9 @@ namespace BatailleWF
     /// </summary>
     public static class PuissanceCarte
     {
+        /// <summary>
+        /// Seul dictionnaire à être réellement utilisé car aucune implémentation n'a été faite pour jouer avec un jeu de belotte au final
+        /// </summary>
         public static Dictionary<int, string> Standard = new Dictionary<int, string>()
         {
             {0, "Deux" },

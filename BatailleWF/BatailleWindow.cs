@@ -30,11 +30,13 @@ namespace BatailleWF
 
         /// <summary>
         /// Gestionnaire de l'événement Played défini dans Bataille
+        /// Il est généré à chaque fois qu'un pli est joué
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PliJouee(object sender, PlayedEventArgs e)
         {
+            // Récupération de la carte du premier joueur
             CarteGraphique card = (CarteGraphique)e.CarteJoueurs.Pop();
             // On appelle this.Invoke afin de pouvoir faire les modifications d'IHM dans le thread IHM.
             // En effet l'événement est levé par le BackgroundWorker qui n'a pas accès aux éléments de l'IHM.
@@ -44,6 +46,7 @@ namespace BatailleWF
                 this.pbJ1.Image = card.Image;
                 this.rtbDisplay.AppendText("\t");
             });
+            // Récupération de la carte du deuxième joueur
             card = (CarteGraphique)e.CarteJoueurs.Pop();
             this.Invoke((MethodInvoker)delegate ()
             {
@@ -51,14 +54,14 @@ namespace BatailleWF
                 this.pbJ2.Image = card.Image;
                 this.lblJ1NbCard.Text = "Nb Cartes : " + e.Joueurs[0].Main.Count;
                 this.lblJ2NbCard.Text = "Nb Cartes : " + e.Joueurs[1].Main.Count;
-                this.rtbDisplay.ScrollToCaret();
+                this.rtbDisplay.ScrollToCaret(); // Force la barre de défilement verticale à aller en bas de la zone de texte
                 this.Update();
-
             });
         }
 
         /// <summary>
         /// Gestionnaire d'événement pour l'événement Gained défini dans Bataille
+        /// Evenement généré à la fin de chaque pli pour indiquer l'état du jeu à la suite de ce dernier
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,7 +92,8 @@ namespace BatailleWF
         }
 
         /// <summary>
-        /// Gestionnaire d'événement pour l'événement Bataille déféini dans Bataille
+        /// Gestionnaire d'événement pour l'événement Bataille défini dans Bataille
+        /// Evenement généré en cas de bataille
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -109,6 +113,7 @@ namespace BatailleWF
         /// <param name="e"></param>
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            // On vide l'afficheur texte
             this.rtbDisplay.Clear();
             // Instanciation d'une nouvelle Bataille
             bataille = new Bataille(txtbJ1Name.Text, txtbJ2Name.Text);
@@ -116,8 +121,8 @@ namespace BatailleWF
             bataille.PlayedEvent += new PlayedEventHandler(PliJouee);
             bataille.PliGainedEvent += new PliGainedEventHandler(PliGagnee);
             bataille.BatailleEvent += new BatailleEventHandler(BatailleEv);
-            btnPlay.Enabled = false;
-            txtbJ1Name.ReadOnly = true;
+            btnPlay.Enabled = false; // On désactive le bouton pour éviter que l'utilisateur ne clique une deuxième fois
+            txtbJ1Name.ReadOnly = true; // On passe les noms en ReadOnly car cette information a été utilisée pour générer nos joueurs
             txtbJ2Name.ReadOnly = true;
             // Lancement du thread de BackgroundWorker
             taskBataille.RunWorkerAsync();
@@ -130,11 +135,12 @@ namespace BatailleWF
         /// <param name="e"></param>
         private void tb_DoWork(object sender, DoWorkEventArgs e)
         {
-            gagnant = bataille.Run();
+            gagnant = bataille.Run(); // On lance la bataille qui va durer un certain temps dans notre thread en tache de fond
         }
 
         /// <summary>
         /// Appelé lors de la fin de l'exécution du thread BackgroundWorker
+        /// donc quand la bataille est finie et que l'on a un vainqueur
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -168,6 +174,7 @@ namespace BatailleWF
             if(taskBataille.IsBusy)
             {
                 // Alors on ne veut pas quitter sinon il y a des risques d'exception
+                // Une autre solution serait de permettre de couper l'exécution de la bataille entre deux plis afin de pouvoir quitter quand on le souhaite
                 MessageBox.Show("Désolé impossible de quitter pendant la partie");
                 // On annule donc l'événement de fermeture
                 e.Cancel = true;
